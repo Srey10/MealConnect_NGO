@@ -32,6 +32,8 @@ export default function RestaurantDashboard() {
   });
 
   const categories = ['Main Course', 'Rice', 'Bread', 'Dessert', 'Snacks', 'Beverages', 'Side Dish'];
+
+
 useEffect(() => {
   if (!user || user.role !== 'restaurant') {
     navigate('/login');
@@ -40,17 +42,17 @@ useEffect(() => {
 
   const loadDataInsideEffect = async () => {
     try {
-      const response = await fetch('/api/your-endpoint'); // replace with your API
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/data`);
       const data = await response.json();
-      // do something with data, e.g., set state
       setYourState(data);
     } catch (error) {
-      console.error('Failed to load data:', error);
+      console.error("Failed to load data:", error);
     }
   };
 
   loadDataInsideEffect();
-}, [user, navigate]); // ✅ no ESLint error
+}, [user, navigate]);
+
 
 
   const loadData = async () => {
