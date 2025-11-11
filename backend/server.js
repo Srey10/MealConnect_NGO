@@ -23,11 +23,15 @@ const app = express();
 // Database
 connectDB();
 
-const allowedOrigins = [
-  'http://localhost:3000',
-  'https://mealconnect-ngo.onrender.com',
-  'https://mealconnect-ngoconnect.onrender.com'
-];
+// Configure allowed origins from environment variable or default to localhost
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+  : ['http://localhost:3000'];
+
+// Log allowed origins in development
+if (process.env.NODE_ENV !== 'production') {
+  console.log('Allowed CORS origins:', allowedOrigins);
+}
 
 // Apply CORS to all routes
 app.use(cors({
