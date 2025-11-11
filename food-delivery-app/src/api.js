@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Build base URL - add /api if not already present
 const baseApiUrl = process.env.REACT_APP_API_URL || 'https://mealconnect-ngo-cxoi.onrender.com';
 const baseURL = baseApiUrl.endsWith('/api') ? baseApiUrl : baseApiUrl + '/api';
 
@@ -37,5 +36,6 @@ api.interceptors.response.use(
 );
 
 export default api;
+
 
 
