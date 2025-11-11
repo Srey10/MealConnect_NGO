@@ -610,7 +610,7 @@ export default function AdminDashboard() {
                       <div style={{ display: 'flex', gap: '8px' }}>
                         {volunteer.verificationProofUrl && (
                           <a
-                            href={`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}${volunteer.verificationProofUrl}`}
+                            href={`${process.env.REACT_APP_API_URL || 'https://mealconnect-ngo-cxoi.onrender.com'}${volunteer.verificationProofUrl}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="btn-view"
@@ -917,4 +917,3 @@ export default function AdminDashboard() {
     </div>
   );
 }
-
