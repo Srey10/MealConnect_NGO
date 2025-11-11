@@ -69,6 +69,14 @@ app.options('*', cors({
   allowedHeaders: ['Content-Type','Authorization']
 }));
 
+// Body parser middleware (MUST be before routes)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// Logging middleware
+app.use(morgan('dev'));
+
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/restaurants', restaurantRoutes);
@@ -90,7 +98,23 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Global error handler (must be after all routes)
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(err.status || 500).json({
+    message: err.message || 'Internal server error',
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ message: 'Route not found' });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`JWT_SECRET: ${process.env.JWT_SECRET ? 'Set' : 'Not set (using default)'}`);
 });
