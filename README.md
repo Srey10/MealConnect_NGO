@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🥗 MealConnect - Turning Excess into Access
 
 ## About
@@ -37,3 +38,6 @@ To build a connected ecosystem where compassion meets technology, turning every 
 
 ##  Built Using the MERN Stack
 MongoDB for data storage, Express and Node.js for backend APIs, and React for a responsive frontend interface.
+=======
+# MealConnect_NGO
+>>>>>>> f2841da355c4e12d04ca96e5065c34b0f92f433a
