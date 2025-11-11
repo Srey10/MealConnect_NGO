@@ -33,13 +33,18 @@ export default function RestaurantDashboard() {
 
   const categories = ['Main Course', 'Rice', 'Bread', 'Dessert', 'Snacks', 'Beverages', 'Side Dish'];
 
-  useEffect(() => {
-    if (!user || user.role !== 'restaurant') {
-      navigate('/login');
-      return;
-    }
-    loadData();
-  }, [user, navigate,loadData]);
+useEffect(() => {
+  if (!user || user.role !== 'restaurant') {
+    navigate('/login');
+    return;
+  }
+
+  const loadDataInsideEffect = async () => {
+  };
+
+  loadDataInsideEffect();
+}, [user, navigate]);
+
 
   const loadData = async () => {
     try {
