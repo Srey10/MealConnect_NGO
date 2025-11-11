@@ -39,7 +39,7 @@ export default function RestaurantDashboard() {
       return;
     }
     loadData();
-  }, [user, navigate]);
+  }, [user, navigate,loadData]);
 
   const loadData = async () => {
     try {
