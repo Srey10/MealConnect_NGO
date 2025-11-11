@@ -23,15 +23,17 @@ const app = express();
 // Database
 connectDB();
 
-// Configure allowed origins from environment variable or default to localhost
+// CORS Configuration
+// ALLOWED_ORIGINS: Comma-separated list of allowed frontend URLs
+// Example: "http://localhost:3000,https://your-frontend.onrender.com"
+// For Render deployment: Set this in Render dashboard → Environment → ALLOWED_ORIGINS
+// Default: Only allows localhost:3000 for local development
 const allowedOrigins = process.env.ALLOWED_ORIGINS 
   ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
   : ['http://localhost:3000'];
 
-// Log allowed origins in development
-if (process.env.NODE_ENV !== 'production') {
-  console.log('Allowed CORS origins:', allowedOrigins);
-}
+// Log allowed origins for debugging
+console.log('Allowed CORS origins:', allowedOrigins);
 
 // Apply CORS to all routes
 app.use(cors({
@@ -40,6 +42,8 @@ app.use(cors({
     if(allowedOrigins.includes(origin)) {
       return callback(null, true);
     } else {
+      console.log(`CORS blocked request from origin: ${origin}`);
+      console.log(`Allowed origins: ${allowedOrigins.join(', ')}`);
       return callback(new Error('Not allowed by CORS'), false);
     }
   },
@@ -55,6 +59,8 @@ app.options('*', cors({
     if(allowedOrigins.includes(origin)) {
       return callback(null, true);
     } else {
+      console.log(`CORS preflight blocked request from origin: ${origin}`);
+      console.log(`Allowed origins: ${allowedOrigins.join(', ')}`);
       return callback(new Error('Not allowed by CORS'), false);
     }
   },
