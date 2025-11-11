@@ -48,9 +48,15 @@ export const login = asyncHandler(async (req, res) => {
   }
   
   const user = await User.findOne({ email });
-  if (!user || !(await user.matchPassword(password))) {
+  if (!user) {
     return res.status(401).json({ message: 'Invalid credentials' });
   }
+  
+  const isMatch = await user.matchPassword(password);
+  if (!isMatch) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+  
   const token = generateToken(user._id);
   res.json({
     _id: user._id,
@@ -64,5 +70,6 @@ export const login = asyncHandler(async (req, res) => {
 export const getMe = asyncHandler(async (req, res) => {
   res.json(req.user);
 });
+
 
 
